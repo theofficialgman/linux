@@ -145,6 +145,10 @@ do {									\
 	asm volatile(   "dsb sy\n"					\
 			"isb\n" : : : "memory")
 
+#define spec_bar()	asm volatile(ALTERNATIVE("dsb nsh\nisb\n",	\
+				     SB_BARRIER_INSN"nop\n",		\
+				     ARM64_HAS_SB))
+
 #include <asm-generic/barrier.h>
 
 #endif	/* __ASSEMBLY__ */
